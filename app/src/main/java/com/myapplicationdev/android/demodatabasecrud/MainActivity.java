@@ -3,8 +3,10 @@ package com.myapplicationdev.android.demodatabasecrud;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,9 +21,10 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     Button btnAdd, btnEdit, btnRetrieve;
-    TextView tvDBContent;
     EditText etContent;
     ArrayList<Note> al;
+    ListView lv;
+    ArrayAdapter aa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +32,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //initialize the variables with UI here
-        tvDBContent = findViewById(R.id.tvDBContent);
         etContent = findViewById(R.id.etContent);
         btnAdd = findViewById(R.id.btnAdd);
         btnEdit = findViewById(R.id.btnEdit);
         btnRetrieve = findViewById(R.id.btnRetrieve);
 
         al = new ArrayList<Note>();
+
+        lv = findViewById(R.id.lv);
+        aa = new ArrayAdapter<Note>(this,
+                android.R.layout.simple_list_item_1, al);
+        lv.setAdapter(aa);
+
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
                     txt += "ID:" + tmp.getId() + ", " +
                             tmp.getNoteContent() + "\n";
                 }
-                tvDBContent.setText(txt);
             }
         });
     }
